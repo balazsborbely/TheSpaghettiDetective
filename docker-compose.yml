@@ -2,7 +2,6 @@ version: "2"
 
 x-web-defaults: 
   &web-defaults
-  image: thespaghettidetective/web:base-1.5
   restart: unless-stopped
   build:
     context: web
@@ -31,7 +30,7 @@ x-web-defaults:
 
 services:
   ml_api:
-    image: thespaghettidetective/ml_api:base-1.1
+    image: ghcr.io/balazsborbely/tsd-ml_api:latest
     hostname: ml-api
     restart: unless-stopped
     build:
@@ -45,6 +44,7 @@ services:
 
   web:
     <<: *web-defaults
+    image: ghcr.io/balazsborbely/tsd-web:latest
     hostname: web
     ports:
       - "3334:3334"
@@ -54,6 +54,7 @@ services:
 
   tasks:
     <<: *web-defaults
+    image: ghcr.io/balazsborbely/tsd-tasks:latest
     hostname: tasks
     command: sh -c "celery -A config worker --beat -l info -c 2 -Q realtime,celery"
 

@@ -61,7 +61,7 @@ spec:
           value: "False"
         - name: WEBPACK_LOADER_ENABLED
           value: "False"
-        image: thespaghettidetective/web:base-1.5
+        image: ghcr.io/balazsborbely/tsd-web:latest
         imagePullPolicy: ""
         name: web
         ports:

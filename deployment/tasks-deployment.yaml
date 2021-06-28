@@ -60,7 +60,7 @@ spec:
           value: "False"
         - name: WEBPACK_LOADER_ENABLED
           value: "False"
-        image: thespaghettidetective/web:base-1.5
+        image: ghcr.io/balazsborbely/tsd-tasks:latest
         imagePullPolicy: ""
         name: tasks
         resources: {}
