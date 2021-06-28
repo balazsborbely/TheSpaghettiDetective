@@ -1,7 +1,8 @@
-version: '2'
+version: "2"
 
 x-web-defaults: 
   &web-defaults
+  image: thespaghettidetective/web:base-1.5
   restart: unless-stopped
   build:
     context: web
@@ -11,35 +12,27 @@ x-web-defaults:
   depends_on:
     - redis
   environment:
-    EMAIL_HOST:     # -> such as 'smtp.gmail.com'
+    EMAIL_HOST: ''    # -> such as 'smtp.gmail.com'
     EMAIL_HOST_USER:   # -> such as your email address for a Gmail account
     EMAIL_HOST_PASSWORD:    # -> your email account password
-    EMAIL_PORT: 587  # DO NOT surround it with quotes. Otherwise email won't be sent!
-    EMAIL_USE_TLS: 'True'
-    DEFAULT_FROM_EMAIL: 'changeme@example.com'
+    EMAIL_PORT: 25  # DO NOT surround it with quotes. Otherwise email won't be sent!
+    EMAIL_USE_TLS: 'False'
+    DEFAULT_FROM_EMAIL: ''
     DEBUG: 'False'    # Don't set DEBUG to True, otherwise the static files will be cached in browser until hard-refresh
-    SITE_USES_HTTPS: 'False' # set it to 'True' if https is set up
+    SITE_USES_HTTPS: 'True' # set it to 'True' if https is set up
     SITE_IS_PUBLIC: 'False' # set it to 'True' if the site configured in django admin is accessible from the internet
     SOCIAL_LOGIN: 'False'
     REDIS_URL: 'redis://redis:6379'
     DATABASE_URL: 'sqlite:////app/db.sqlite3'
     INTERNAL_MEDIA_HOST: 'http://web:3334'
-    ML_API_HOST: 'http://ml_api:3333'
+    ML_API_HOST: 'http://ml-api:3333'
     ACCOUNT_ALLOW_SIGN_UP: 'False'  # -> set to 'True' if you want to open sign up form
-    WEBPACK_LOADER_ENABLED:
-
-    #### Optional env vars below this line ###
-    #TWILIO_ACCOUNT_SID: https://django-twilio.readthedocs.io/en/latest/settings.html for how to find and set the TWILIO_XXX vars
-    #TWILIO_AUTH_TOKEN:
-    #TWILIO_FROM_NUMBER:
-    #ML_API_TOKEN:
-    #SENTRY_DSN:
-    #TELEGRAM_BOT_TOKEN: https://core.telegram.org/bots#6-botfather for how to create a telegram bot and get its token
-    #PUSHOVER_APP_TOKEN: https://pushover.net/api#registration for how to register an app api token
+    WEBPACK_LOADER_ENABLED: 'False'
 
 services:
   ml_api:
-    hostname: ml_api
+    image: thespaghettidetective/ml_api:base-1.1
+    hostname: ml-api
     restart: unless-stopped
     build:
       context: ml_api
